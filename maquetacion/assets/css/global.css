@@ -4,20 +4,24 @@
     box-sizing: border-box;
 }
 
-.main{
-    height: 600px;
-    width: 1200px;
-    border: 1px solid black;
+ul,ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    font-size: 1.6rem;
 }
 
-.caja{
-    float: left;
-    background-color: red;
-    width: 50%;
-    height: 300px;
-    border: 1px solid black;
-}
+/* ========= HEADER ========= */
 
-.caja--azul{
-    background-color: blue;
+.header{
+    width: 100%;
+    height: 10rem;
+    
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
 }
