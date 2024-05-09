@@ -1,0 +1,23 @@
+*, *::before, *::after{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.main{
+    height: 600px;
+    width: 1200px;
+    border: 1px solid black;
+}
+
+.caja{
+    float: left;
+    background-color: red;
+    width: 50%;
+    height: 300px;
+    border: 1px solid black;
+}
+
+.caja--azul{
+    background-color: blue;
+}
