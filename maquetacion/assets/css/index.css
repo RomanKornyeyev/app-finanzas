@@ -1,0 +1,21 @@
+.main__content{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    border: 1px solid black;
+}
+
+.main__content>*{
+    border: 1px solid black;
+}
+
+.main__content h1{
+    font-size: var(--space-ultra-l);
+}
+
+.main__buttons{
+    
+}

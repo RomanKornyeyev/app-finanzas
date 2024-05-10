@@ -1,23 +1,22 @@
+/* ========= IMPORTS ========= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('buttons.css');
+@import url('form.css');
+
+/* ========= VARIABLES ========= */
 *, *::before, *::after{
     margin:0;
     padding:0;
     box-sizing: border-box;
 }
+ul,ol{list-style: none;}
+a{text-decoration: none; color: var(--text-color);}
+html{font-size: 62.5%;}
+body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color);}
 
-ul,ol{
-    list-style: none;
-}
-a{
-    text-decoration: none;
-}
-html{
-    font-size: 62.5%;
-}
-body{
-    font-size: 1.6rem;
-}
+
+
 /* ========= VARIABLES ========= */
-
 :root{
     /* ===== COLORS ===== */
     --white: #fff;
@@ -67,8 +66,13 @@ body{
     --secondary-800: #174564;
     --secondary-900: #0f344d;
 
-    --header-bg: var(--background-900);
-    --footer-bg: var(--background-900);
+    /* --secondary-500: rgb(2, 132, 132); */
+
+    --bg-900: #072146;
+
+    --header-bg: var(--bg-900);
+    --footer-bg: var(--bg-900);
+    --text-color: var(--black);
     --footer-text: var(--white);
 
 
@@ -93,7 +97,9 @@ body{
     --br-default: var(--space-s);
     --br-large: var(--space-m);
 
-    --m-default: var(var(--space-s));
+    --m-default: var(--space-s);
+
+    --p-default: var(--space-l);
 
     /* ====== WIDTHS ====== */
     --width-default: 120rem;
@@ -102,12 +108,15 @@ body{
     --primary-font: "Inter", sans-serif;
 }
 
-.limit-width{
-    max-width: var(--width-default);
-}
+/* ========= UTILITY CLASSES ========= */
+.limit-width{max-width: var(--width-default);}
+.d-block{display: block;}
+
+
+
+
 
 /* ========= GLOBAL-CONTAINER ========= */
-
 .global-container{
     min-height: 100vh;
     min-height: 100dvh;
@@ -116,11 +125,13 @@ body{
         auto   /*header*/
         1fr    /*body*/
         auto;  /*footer*/
-    
 }
 
-/* ========= HEADER ========= */
 
+
+
+
+/* ========= HEADER ========= */
 .header{
     width: 100%;
     height: 10rem;
@@ -134,12 +145,16 @@ body{
     flex-direction: row;
     justify-content: space-between;
     height: 100%;
-
+    padding: var(--p-default);
 }
 
 .header__content>*{
     /* border: 1px solid black; */
     flex-grow: 1;
+}
+
+.logo-link, .logo{
+    height: 100%;
 }
 
 .header__nav{
@@ -168,20 +183,60 @@ body{
     gap: var(--space-m);
 }
 
-/* ========= MAIN ========= */
+.nav a:hover, .nav a:active{
+    text-decoration: underline;
+}
 
+
+
+
+/* ========= MAIN ========= */
 .main{
     width: 100%;
     margin: 0 auto;
     border:1px solid black;
-    
+    padding: var(--p-default);
 }
 
 /* ========= FOOTER ========= */
-
 .footer{
     width: 100%;
     height: 10rem;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+}
+.footer a{
+    color: var(--secondary-100);
+}
+.footer svg{
+    color: var(--footer-text);
+    fill: var(--footer-text);
+}
+
+.footer__content{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+    padding: var(--p-default);
+}
+
+.footer__nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+/* ================== TABLET ================== */
+@media screen and (max-width: 810px) {
     
-    border:1px solid black;
+}
+
+/* ================== MOBILE ================== */
+@media screen and (max-width: 480px) {
+    
 }
