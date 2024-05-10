@@ -11,7 +11,7 @@
     font-size: 1.6rem;
     line-height: 1.5;
     padding: .7rem 1.8rem;
-    color: var(--black);
+    color: var(--white);
     background-color: var(--primary-500);
     border-radius: var(--space-s);
     transition: all 175ms ease-out;
