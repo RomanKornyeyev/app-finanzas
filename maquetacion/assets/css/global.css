@@ -15,8 +15,9 @@ ul,ol{list-style: none;}
 a{text-decoration: none; color: var(--text-color);}
 html{font-size: 62.5%;}
 body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color);}
-
-
+h1{font-size: 3rem;} @media screen and (max-width: 480px){h1{font-size: 2.8rem}}
+h2{font-size: 2.8rem;} @media screen and (max-width: 480px){h2{font-size: 2.6rem}}
+h3{font-size: 2.6rem;} @media screen and (max-width: 480px){h3{font-size: 2.4rem}}
 
 /* ========= VARIABLES ========= */
 :root{
@@ -36,6 +37,7 @@ body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color
     --gray-900: #292929;
     --almost-black: #111111;
     --black: #000;
+    --success-400: #2db64d;
     --success-500: #28a745;
     --success-600: #158a30;
     --success-700: #0e8029;
@@ -274,7 +276,7 @@ body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color
     gap: var(--space-m);
 }
 
-.nav a:hover, .nav a:active{
+.nav__link:hover, .nav__link:active{
     text-decoration: underline;
 }
 
