@@ -325,6 +325,7 @@ body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color
 }
 
 
+
 /* ================== TABLET ================== */
 @media screen and (max-width: 810px) {
     .header__content--mobile{
@@ -373,7 +374,9 @@ body{font-size: 1.6rem; font-family: var(--primary-font);color: var(--text-color
 
 /* ================== MOBILE ================== */
 @media screen and (max-width: 480px) {
-    
+    .d-none-mobile{
+        display: none;;
+    }
 }
 
 /* extra responsive stuff for header always down */
