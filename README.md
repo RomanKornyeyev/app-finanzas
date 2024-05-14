@@ -1,6 +1,6 @@
-<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+<div style="display: flex !important; justify-content: center !important; align-items: center !important; gap: 15px !important;">
     <img src="./maquetacion/assets/img/logo_definitivo_color.svg" width="100">
-    <h1 style="color: #1669a8; font-size: 50px;">EconoMe</h1>
+    <p style="color: #1669a8 !important; font-size: 50px !important;">EconoMe</p>
 </div>
 
 

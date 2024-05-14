@@ -164,18 +164,52 @@
     padding: var(--space-xl) 0;
     border-radius: var(--br-default);
     overflow: hidden;
-    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
-    border: 1px solid black;
+    box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
 }
 
 .date__title{
     text-align: center;
+    font-weight: 400;
     transition: transform 150ms ease-out;
 }
 
 .date__box:hover>.date__title{
     transform: scale(1.15);
 }
+
+.dates__day{
+    margin-bottom: var(--space-xxxl);
+}
+
+.day__title{
+    margin-bottom: var(--space-ml);
+    font-weight: 500;
+}
+
+.day__day-movement{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: var(--p-default);
+    border-radius: var(--br-default);
+    padding: var(--p-default);
+    box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
+    margin-bottom: var(--space-ml);
+}
+
+.day-movement__title, .day-movement__desc{justify-self: start;}
+.day-movement__net, .day-movement__category{justify-self: end;}
+
+.day-movement__title{
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.day-movement__desc, .day-movement__category{
+    color: var(--almost-black);
+    font-size: 1.4rem;
+}
+
 
 /* ================== TABLET ================== */
 @media screen and (max-width: 810px) {
