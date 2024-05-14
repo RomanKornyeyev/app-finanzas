@@ -48,8 +48,7 @@
 .box__net--positive{background-color: var(--success-500);}
 
 .dashboard__diagram{
-    /* min-height: 400px; */
-    /* border: 1px solid black; */
+    margin-bottom: var(--space-ultra-xl);
 }
 
 /* CHART */
@@ -147,12 +146,57 @@
 }
 /* END CHART */
 
+.dates__title{
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.dates__content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--space-ultra-xl);
+    row-gap: var(--space-xxxl);
+    margin-bottom: var(--space-l);
+}
+
+.date__box{
+    cursor: pointer;
+    padding: var(--space-xl) 0;
+    border-radius: var(--br-default);
+    overflow: hidden;
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+    border: 1px solid black;
+}
+
+.date__title{
+    text-align: center;
+    transition: transform 150ms ease-out;
+}
+
+.date__box:hover>.date__title{
+    transform: scale(1.15);
+}
+
 /* ================== TABLET ================== */
 @media screen and (max-width: 810px) {
+    .dashboard__movements, .dates__content{
+        gap: var(--space-xxxl);
+    }
+}
 
+/* ================== EXTRA ================== */
+@media screen and (max-width: 580px) {
+    .dashboard__movements, .dates__content{
+        gap: var(--space-l);
+    }
 }
 
 /* ================== MOBILE ================== */
 @media screen and (max-width: 480px) {
-
+    .dashboard__movements{
+        flex-flow: column;
+    }
+    .dates__content{
+        grid-template-columns: 1fr;
+    }
 }
