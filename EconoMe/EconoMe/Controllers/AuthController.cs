@@ -12,6 +12,7 @@ namespace EconoMe.Controllers
     public class AuthController : ApiController
     {
         private readonly ControlFinanzasEntities _context;
+        private const int TokenExpirationDays = 7; // Duración del token en días
 
         public AuthController()
         {
@@ -39,7 +40,7 @@ namespace EconoMe.Controllers
             var nuevoUsuario = new Usuarios
             {
                 NombreUsuario = request.NombreUsuario,
-                Clave = request.Clave, // La contraseña ya llega hasheada
+                Clave = PasswordHasher.HashPassword(request.Clave), // La contraseña ya llega hasheada
                 Nombres = request.Nombres,
                 Apellidos = request.Apellidos,
                 Email = request.Email
@@ -61,14 +62,70 @@ namespace EconoMe.Controllers
             // Buscar el usuario en la base de datos
             var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == request.Email);
 
+            // Se comprueba si existe un token y es válido (no está caducado, 7 días)
+            bool existeTokenValido = ValidateToken(usuario.id, usuario.Token);
+
+            // Credenciales incorrectas, NO AUTORIZADO
             if (usuario == null || !PasswordHasher.VerifyPassword(request.Clave, usuario.Clave))
             {
                 return Unauthorized();
             }
 
-            // Aquí podrías generar y devolver un token de acceso si lo necesitas
+            // Renovar la duración del token o generar uno nuevo si no existe
+            if (existeTokenValido)
+            {
+                // Token existente y vigente, renovar la duración
+                usuario.TokenGenerated = DateTime.UtcNow;
+            }
+            else
+            {
+                // Generar un nuevo token y sobreescribirlo en la base de datos
+                usuario.Token = GenerateToken();
+                usuario.TokenGenerated = DateTime.UtcNow;
+            }
 
-            return Ok("Inicio de sesión exitoso.");
+            _context.SaveChanges();
+
+            return Ok(new { Token = usuario.Token, id_usuario = usuario.id });
+        }
+
+        // Método para generar un token aleatorio
+        private string GenerateToken()
+        {
+            byte[] tokenBytes = new byte[64];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(tokenBytes);
+            }
+            return Convert.ToBase64String(tokenBytes);
+        }
+
+        // Método para validar un token para un usuario específico
+        private bool ValidateToken(int userId, string token)
+        {
+            // Buscar el usuario en la base de datos por su ID
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.id == userId);
+
+            // Verificar si el usuario existe y el token coincide
+            return usuario != null && usuario.Token == token && usuario.TokenGenerated.HasValue && DateTime.UtcNow.Subtract(usuario.TokenGenerated.Value).TotalDays < TokenExpirationDays;
+        }
+
+        // Método para renovar el token de un usuario
+        private void RenewToken(int userId, string token)
+        {
+            // Comprobar si el token es válido
+            if (ValidateToken(userId, token))
+            {
+                // Buscar el usuario en la base de datos por su ID
+                var usuario = _context.Usuarios.FirstOrDefault(u => u.id == userId);
+
+                // Renovar la duración del token
+                usuario.TokenGenerated = DateTime.UtcNow;
+
+                // Guardar los cambios en la base de datos
+                _context.SaveChanges();
+            }
+            // Si el token no es válido, no se hace nada
         }
     }
 
@@ -86,6 +143,8 @@ namespace EconoMe.Controllers
     // Clase para recibir los datos de inicio de sesión de usuario
     public class LoginUsuarioRequest
     {
+        public int Id {  get; set; } //params opcionales para token
+        public string Token { get; set; } //params opcionales para token
         public string Email { get; set; }
         public string Clave { get; set; }
     }
