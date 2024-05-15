@@ -188,25 +188,36 @@
 
 .day__day-movement{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1.25fr 0.75fr;
     width: 100%;
     gap: var(--p-default);
     border-radius: var(--br-default);
     padding: var(--p-default);
     box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
     margin-bottom: var(--space-ml);
+    max-height: 8.6rem;
+}
+
+.day__day-movement>*{
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    -webkit-line-clamp: 1;
 }
 
 .day-movement__title, .day-movement__desc{justify-self: start;}
 .day-movement__net, .day-movement__category{justify-self: end;}
 
-.day-movement__title{
+.day-movement__title, .day-movement__net{
     font-size: 2rem;
     font-weight: 500;
 }
 
 .day-movement__desc, .day-movement__category{
-    color: var(--almost-black);
+    color: var(--gray-700);
     font-size: 1.4rem;
 }
 
@@ -232,5 +243,9 @@
     }
     .dates__content{
         grid-template-columns: 1fr;
+    }
+    .day-movement__title, .day-movement__net{
+        font-size: 1.8rem;
+        font-weight: 450;
     }
 }
