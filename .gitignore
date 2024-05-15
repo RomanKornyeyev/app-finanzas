@@ -1,0 +1,58 @@
+Publish/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# ReSharper files
+_ReSharper*/
+
+# NuGet packages
+packages/
+
+# User-specific files
+*.userprefs
+*.usertasks
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Oo]bj/
+[Ll]og/
+[Bb]in/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# Unity generated files
+Temp/
+[Oo]bj/
+[Bb]uild/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Resharper
+_resharper*
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
