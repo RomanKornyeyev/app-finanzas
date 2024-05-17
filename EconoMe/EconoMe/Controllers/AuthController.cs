@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -6,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
 using EconoMe.Models;
+using EconoMe.Models.DTOs;
 
 namespace EconoMe.Controllers
 {
@@ -62,14 +64,15 @@ namespace EconoMe.Controllers
             // Buscar el usuario en la base de datos
             var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == request.Email);
 
-            // Se comprueba si existe un token y es válido (no está caducado, 7 días)
-            bool existeTokenValido = ValidateToken(usuario.id, usuario.Token);
-
             // Credenciales incorrectas, NO AUTORIZADO
             if (usuario == null || !PasswordHasher.VerifyPassword(request.Clave, usuario.Clave))
             {
                 return Unauthorized();
             }
+
+            //quitar el id del login y modificar la función
+            // Se comprueba si existe un token y es válido (no está caducado, 7 días)
+            bool existeTokenValido = ValidateToken(usuario.Token);
 
             // Renovar la duración del token o generar uno nuevo si no existe
             if (existeTokenValido)
@@ -86,8 +89,127 @@ namespace EconoMe.Controllers
 
             _context.SaveChanges();
 
-            return Ok(new { Token = usuario.Token, id_usuario = usuario.id });
+            return Ok(new { Token = usuario.Token });
         }
+
+        // Obtener todas las transacciones de un usuario específico
+        [HttpGet]
+        [Route("api/Reports/GetUserGlobalTransactions")]
+        public IHttpActionResult GetUserGlobalTransactions()
+        {
+            // Leer el token de acceso y el ID de usuario de los encabezados de la solicitud
+            var headers = Request.Headers;
+            if (!headers.Contains("Authorization"))
+            {
+                return BadRequest("Faltan encabezados de autenticación.");
+            }
+
+            string token = headers.GetValues("Authorization").FirstOrDefault();
+
+            // Comprobar si el token es válido
+            if (!ValidateToken(token))
+            {
+                return Unauthorized();
+            }
+
+            // Buscar las transacciones del usuario en la base de datos
+            // (normalmente la querys no se hacen en los controladores)
+            var userId = _context.Usuarios
+                .Where(u => u.Token == token)
+                .Select(u => u.id)
+                .FirstOrDefault();
+            var transactions = _context.Transaciones
+                .Where(t => t.UsuarioId == userId)
+                .ToList();
+
+            List<TransaccionesDTO> retVal = new List<TransaccionesDTO>();
+            foreach (var transaccion in transactions)
+            {
+                retVal.Add(new TransaccionesDTO(transaccion));
+            }
+
+            return Ok(retVal);
+        }
+
+        // Obtener todas las transacciones de un usuario específico (por año)
+        [HttpGet]
+        [Route("api/Reports/GetUserTransactionsByYear")]
+        public IHttpActionResult GetUserTransactionsByYear(int year)
+        {
+            // Leer el token de acceso y el ID de usuario de los encabezados de la solicitud
+            var headers = Request.Headers;
+            if (!headers.Contains("Authorization"))
+            {
+                return BadRequest("Faltan encabezados de autenticación.");
+            }
+
+            string token = headers.GetValues("Authorization").FirstOrDefault();
+
+            // Comprobar si el token es válido
+            if (!ValidateToken(token))
+            {
+                return Unauthorized();
+            }
+
+            var userId = _context.Usuarios
+                .Where(u => u.Token == token)
+                .Select(u => u.id)
+                .FirstOrDefault();
+
+            if (userId == 0)
+            {
+                return Unauthorized();
+            }
+
+            var transactions = _context.Transaciones
+                .Where(t => t.UsuarioId == userId && t.Fecha.Year == year)
+                .ToList();
+
+            var transactionsDto = transactions.Select(t => new TransaccionesDTO(t)).ToList();
+
+            return Ok(transactionsDto);
+        }
+
+        // Obtener todas las transacciones de un usuario específico (por mes)
+        [HttpGet]
+        [Route("api/Reports/GetUserTransactionsByMonth")]
+        public IHttpActionResult GetUserTransactionsByMonth(int year, int month)
+        {
+            // Leer el token de acceso y el ID de usuario de los encabezados de la solicitud
+            var headers = Request.Headers;
+            if (!headers.Contains("Authorization"))
+            {
+                return BadRequest("Faltan encabezados de autenticación.");
+            }
+
+            string token = headers.GetValues("Authorization").FirstOrDefault();
+
+            // Comprobar si el token es válido
+            if (!ValidateToken(token))
+            {
+                return Unauthorized();
+            }
+
+            var userId = _context.Usuarios
+                .Where(u => u.Token == token)
+                .Select(u => u.id)
+                .FirstOrDefault();
+
+            if (userId == 0)
+            {
+                return Unauthorized();
+            }
+
+            var transactions = _context.Transaciones
+                .Where(t => t.UsuarioId == userId && t.Fecha.Year == year && t.Fecha.Month == month)
+                .ToList();
+
+            var transactionsDto = transactions.Select(t => new TransaccionesDTO(t)).ToList();
+
+            return Ok(transactionsDto);
+        }
+
+
 
         // Método para generar un token aleatorio
         private string GenerateToken()
@@ -100,11 +222,12 @@ namespace EconoMe.Controllers
             return Convert.ToBase64String(tokenBytes);
         }
 
+        // cambiar la función para que solo use token (y no id de user) buscar token y mirar que no esté caducado
         // Método para validar un token para un usuario específico
-        private bool ValidateToken(int userId, string token)
+        private bool ValidateToken(string token)
         {
             // Buscar el usuario en la base de datos por su ID
-            var usuario = _context.Usuarios.FirstOrDefault(u => u.id == userId);
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Token == token);
 
             // Verificar si el usuario existe y el token coincide
             return usuario != null && usuario.Token == token && usuario.TokenGenerated.HasValue && DateTime.UtcNow.Subtract(usuario.TokenGenerated.Value).TotalDays < TokenExpirationDays;
@@ -114,10 +237,10 @@ namespace EconoMe.Controllers
         private void RenewToken(int userId, string token)
         {
             // Comprobar si el token es válido
-            if (ValidateToken(userId, token))
+            if (ValidateToken(token))
             {
                 // Buscar el usuario en la base de datos por su ID
-                var usuario = _context.Usuarios.FirstOrDefault(u => u.id == userId);
+                var usuario = _context.Usuarios.FirstOrDefault(u => u.Token == token);
 
                 // Renovar la duración del token
                 usuario.TokenGenerated = DateTime.UtcNow;
@@ -143,8 +266,8 @@ namespace EconoMe.Controllers
     // Clase para recibir los datos de inicio de sesión de usuario
     public class LoginUsuarioRequest
     {
-        public int Id {  get; set; } //params opcionales para token
-        public string Token { get; set; } //params opcionales para token
+        //public int Id {  get; set; } //params opcionales para token
+        //public string Token { get; set; } //params opcionales para token
         public string Email { get; set; }
         public string Clave { get; set; }
     }

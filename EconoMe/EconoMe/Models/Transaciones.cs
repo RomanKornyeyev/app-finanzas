@@ -9,6 +9,7 @@
 
 namespace EconoMe.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -27,9 +28,11 @@ namespace EconoMe.Models
         public string Descripcion { get; set; }
         public int TipoTransaccionId { get; set; }
         public int UsuarioId { get; set; }
-    
+
         public virtual TiposDeTransacciones TiposDeTransacciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        [JsonIgnore]
         public virtual ICollection<TransaccionesCategorias> TransaccionesCategorias { get; set; }
         public virtual Usuarios Usuarios { get; set; }
     }
