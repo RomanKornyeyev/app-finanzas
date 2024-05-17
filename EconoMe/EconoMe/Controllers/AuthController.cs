@@ -209,6 +209,45 @@ namespace EconoMe.Controllers
             return Ok(transactionsDto);
         }
 
+        // Obtener todas las transacciones de un usuario específico (por día)
+        [HttpGet]
+        [Route("api/Reports/GetUserTransactionsByDay")]
+        public IHttpActionResult GetUserTransactionsByDay(int year, int month, int day)
+        {
+            // Leer el token de acceso y el ID de usuario de los encabezados de la solicitud
+            var headers = Request.Headers;
+            if (!headers.Contains("Authorization"))
+            {
+                return BadRequest("Faltan encabezados de autenticación.");
+            }
+
+            string token = headers.GetValues("Authorization").FirstOrDefault();
+
+            // Comprobar si el token es válido
+            if (!ValidateToken(token))
+            {
+                return Unauthorized();
+            }
+
+            var userId = _context.Usuarios
+                .Where(u => u.Token == token)
+                .Select(u => u.id)
+                .FirstOrDefault();
+
+            if (userId == 0)
+            {
+                return Unauthorized();
+            }
+
+            var transactions = _context.Transaciones
+                .Where(t => t.UsuarioId == userId && t.Fecha.Year == year && t.Fecha.Month == month && t.Fecha.Day == day)
+                .ToList();
+
+            var transactionsDto = transactions.Select(t => new TransaccionesDTO(t)).ToList();
+
+            return Ok(transactionsDto);
+        }
+
 
 
         // Método para generar un token aleatorio
