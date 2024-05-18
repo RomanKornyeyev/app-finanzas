@@ -1,0 +1,30 @@
+.main__content{
+    /* border: 1px solid black; */
+    width: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-wrapper{
+    border-radius: var(--br-default);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 45rem;
+    margin: 0 auto;
+    padding: var(--space-xxxl);
+}
+
+.form{
+    margin-bottom: var(--space-xl);
+}
+
+/* ===== PHONE ===== */
+@media screen and (max-width: 480px) {
+    .form-wrapper{
+        padding: var(--space-xxxl) var(--space-l);
+    }
+}
