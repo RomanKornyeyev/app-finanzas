@@ -6,7 +6,7 @@
 
 .form-wrapper{
     border-radius: var(--br-default);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
     width: 100%;
     margin: 0 auto;
     padding: var(--space-xxxl);
@@ -23,9 +23,9 @@
     /* border: 1px solid white; */
 }
 
-.input{
+/* .input{
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.25);
-}
+} */
 
 .dates__title{
     text-align: center;
