@@ -4,11 +4,6 @@
     padding: var(--space-l);
 }
 
-.main__nav{
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-xl);
-}
-
 .nav__delimiter{
     color: var(--gray-700);
 }

@@ -83,6 +83,9 @@
 }
 
 /* ===== LABELS ===== */
+.label-select{
+    text-align: left;
+}
 .label{
     padding: 0 .25rem;
     transition: all 100ms ease-out;
