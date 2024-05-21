@@ -13,6 +13,14 @@ namespace EconoMeMVC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Ruta personalizada
+            routes.MapRoute(
+                name: "DashboardByYear",
+                url: "Home/Dashboard/{year}",
+                defaults: new { controller = "Home", action = "Dashboard" },
+                constraints: new { year = @"\d{4}" } // Solo acepta años de 4 dígitos
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

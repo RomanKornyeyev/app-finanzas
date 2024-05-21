@@ -27,9 +27,14 @@ namespace EconoMeMVC
             //          "~/Content/bootstrap.css",
             //          "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/Custom_CSS/js-global").Include(
+            // ====================== JS ======================
+            bundles.Add(new Bundle("~/Content/Custom_JS/js-global").Include(
                       "~/Content/Custom_JS/header.js"));
 
+            bundles.Add(new Bundle("~/Content/Custom_JS/js-chart").Include(
+                      "~/Content/Custom_JS/chart.js"));
+
+            // ====================== CSS ======================
             bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-global").Include(
                       "~/Content/Custom_CSS/buttons.css",
                       "~/Content/Custom_CSS/global.css"));

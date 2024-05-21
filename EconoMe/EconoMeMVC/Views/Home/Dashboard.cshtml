@@ -57,3 +57,11 @@
         </div>
     </section>
 </div>
+
+@*@section Scripts{
+        @Scripts.Render("~/Content/Custom_JS/js-chart")
+    }*@
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="~/Content/Custom_JS/chart.js" defer></script>
+}
