@@ -1,139 +1,154 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - EconoMe</title>
-    @Styles.Render("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
-    @Styles.Render("~/Content/Custom_CSS/css")
-    @Styles.Render(@ViewBag.SpecificStyles)
-    @*@Styles.Render("~/Content/css")*@
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Math", "Math", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
+<html lang="es">
+    <head>
+        <!-- META -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Gestiona tus finanzas personales" />
+        <meta name="keywords" content="ahorro, finanzas, gestion finanzas" />
+        <meta name="author" content="Doryan, Román" />
+        <meta name="copyright" content="Doryan, Román" />
+
+        <!-- TITLE -->
+        <title>@ViewBag.Title - EconoMe</title>
+        <link rel="shortcut icon" href="~/Content/Img/logo_definitivo_color.svg" type="image/x-icon" />
+
+        <!-- CSS -->
+        @Styles.Render("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
+        @Styles.Render("~/Content/Custom_CSS/css-global")
+        @Styles.Render(@ViewBag.SpecificStyles)
+
+
+
+        @* ORIGINAL: *@
+        @*@Styles.Render("~/Content/css")*@
+        @*@Scripts.Render("~/bundles/modernizr")*@
+    </head>
+    <body>
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+                <div class="container">
+                    @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Math", "Math", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+            </nav>
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+                </footer>
+            </div>*@
+
+        <!-- ========== GLOBAL CONTAINER ========== -->
+        <div class="global-container">
+            <!-- ========== HEADER ========== -->
+            <header class="header">
+                <div class="header__content--mobile">
+                    <div class="header__logo header__logo--mobile">
+                        <a href="index.html" class="d-block logo-link">
+                            <?xml version="1.0" encoding="utf-8" ?>
+                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                            <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:rgba(2,132,132,1);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" fill="url(#grad-2)" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div id="nav-toggle" class="nav-toggle">
+                        <span class="bar bar--top"></span>
+                        <span class="bar bar--middle"></span>
+                        <span class="bar bar--bottom"></span>
+                    </div>
+                </div>
+
+                <div id="header-content" class="header__content limit-width">
+                    <div class="header__logo header__logo--pc">
+                        <a href="index.html" class="d-block logo-link logo-link--header">
+                            <?xml version="1.0" encoding="utf-8" ?>
+                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                            <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:rgba(2,132,132,1);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" fill="url(#grad)" />
+                            </svg>
+                            <h2>
+                                EconoMe
+                            </h2>
+                        </a>
+                    </div>
+                    <nav aria-label="hearder-navigation" class="header__nav">
+                        <ul class="nav">
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@Html.ActionLink("Dashboard", "Movements", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                        </ul>
+                    </nav>
+                    <nav aria-label="hearder-navigation" class="header__login">
+                        <ul class="nav">
+                            <li><a class="nav__link" href="">Login</a></li>
+                            <li><a class="nav__link" href="">Regístrate</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- ========== MAIN ========== -->
+            <main class="main">
+                @RenderBody()
+            </main>
+
+            <!-- ========== FOOTER ========== -->
+            <footer class="footer">
+                <div class="footer__content limit-width">
+                    <div class="footer__logo">
+                        <a href="index.html" class="d-block logo-link logo-link--footer">
+                            <?xml version="1.0" encoding="utf-8" ?>
+                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                            <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" />
+                            </svg>
+                            <h2 class="d-none-mobile">EconoMe</h2>
+                        </a>
+                    </div>
+                    <nav aria-label="footer-navigation" class="footer__nav">
+                        <ul class="nav">
+                            <li><a class="nav__link" href="">Contacto</a></li>
+                            <li><a class="nav__link" href="">Register</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </footer>
-        </div>*@
-
-    <!-- ========== GLOBAL CONTAINER ========== -->
-    <div class="global-container">
-        <!-- ========== HEADER ========== -->
-        <header class="header">
-            <div class="header__content--mobile">
-                <div class="header__logo header__logo--mobile">
-                    <a href="index.html" class="d-block logo-link">
-                        <?xml version="1.0" encoding="utf-8" ?>
-                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                        <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:rgba(2,132,132,1);stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" fill="url(#grad-2)" />
-                        </svg>
-                    </a>
-                </div>
-
-                <div id="nav-toggle" class="nav-toggle">
-                    <span class="bar bar--top"></span>
-                    <span class="bar bar--middle"></span>
-                    <span class="bar bar--bottom"></span>
-                </div>
-            </div>
-
-            <div id="header-content" class="header__content limit-width">
-                <div class="header__logo header__logo--pc">
-                    <a href="index.html" class="d-block logo-link logo-link--header">
-                        <?xml version="1.0" encoding="utf-8" ?>
-                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                        <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:rgba(2,132,132,1);stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:rgba(21,98,156,1);stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" fill="url(#grad)" />
-                        </svg>
-                        <h2>
-                            EconoMe
-                        </h2>
-                    </a>
-                </div>
-                <nav aria-label="hearder-navigation" class="header__nav">
-                    <ul class="nav">
-                        <li><a class="nav__link" href="dashboard.html">Dashboard</a></li>
-                        <li><a class="nav__link" href="">Movimientos</a></li>
-                    </ul>
-                </nav>
-                <nav aria-label="hearder-navigation" class="header__login">
-                    <ul class="nav">
-                        <li><a class="nav__link" href="">Login</a></li>
-                        <li><a class="nav__link" href="">Regístrate</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <!-- ========== MAIN ========== -->
-        <main class="main">
-            @RenderBody()
-        </main>
-
-        <!-- ========== FOOTER ========== -->
-        <footer class="footer">
-            <div class="footer__content limit-width">
-                <div class="footer__logo">
-                    <a href="index.html" class="d-block logo-link logo-link--footer">
-                        <?xml version="1.0" encoding="utf-8" ?>
-                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                        <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M209.094 19.53L150.53 35.22l234.19 234.186 11.436 11.47-15.625 4.187-182.25 48.78L184 387.032l307.78-82.467.408-1.5L209.094 19.53zm-77.75 22.94L25.78 436.31l45.376 45.375 87.375-326.062 4.19-15.656 11.436 11.468 133.688 133.718 52.22-13.97L131.343 42.47zm41.062 133.655L87.53 492.845l381.126-102.126 17.53-65.314L173.22 409.28l-15.657 4.19 4.218-15.658 49.126-183.156-38.5-38.53z" />
-                        </svg>
-                        <h2 class="d-none-mobile">EconoMe</h2>
-                    </a>
-                </div>
-                <nav aria-label="footer-navigation" class="footer__nav">
-                    <ul class="nav">
-                        <li><a class="nav__link" href="">Contacto</a></li>
-                        <li><a class="nav__link" href="">Register</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </footer>
-    </div>
+        </div>
 
     
 
-    @Scripts.Render("~/Content/Custom_CSS/js-global")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/Content/Custom_CSS/js-global")
+        @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
+    </body>
 </html>

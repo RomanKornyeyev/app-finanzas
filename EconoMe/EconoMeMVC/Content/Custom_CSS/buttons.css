@@ -183,6 +183,13 @@
     }
 }
 
+/* ===== FUNCTIONS ===== */
+.disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
 
 /* ===== FONTS ===== */
 .btn--bold{font-weight: 700;}

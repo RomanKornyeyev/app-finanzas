@@ -1,0 +1,96 @@
+.main__content{
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--space-l);
+}
+
+.form-wrapper{
+    border-radius: var(--br-default);
+    box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--space-xxxl);
+    margin-bottom: var(--space-ultra-l);
+}
+
+.form-top-side{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-l);
+    width: 100%;
+    min-height: 2rem;
+    gap: 1.75rem;
+    /* border: 1px solid white; */
+}
+
+/* .input{
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.25);
+} */
+
+.dates__title{
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.dates__day{
+    margin-bottom: var(--space-xxxl);
+}
+
+.day__title{
+    margin-bottom: var(--space-ml);
+    font-weight: 500;
+}
+
+.day__day-movement{
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    width: 100%;
+    gap: var(--p-default);
+    border-radius: var(--br-default);
+    padding: var(--p-default);
+    box-shadow: 1px 1px 2.5px 1px rgba(0,0,0,0.55);
+    margin-bottom: var(--space-ml);
+    max-height: 8.6rem;
+}
+
+.day__day-movement>*{
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    -webkit-line-clamp: 1;
+}
+
+.day-movement__title, .day-movement__desc{justify-self: start;}
+.day-movement__net, .day-movement__category{justify-self: end;}
+
+.day-movement__title, .day-movement__net{
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.day-movement__desc, .day-movement__category{
+    color: var(--gray-700);
+    font-size: 1.4rem;
+}
+
+
+/* ================== TABLET ================== */
+@media screen and (max-width: 810px) {
+
+}
+
+/* ================== EXTRA ================== */
+@media screen and (max-width: 580px) {
+
+}
+
+/* ================== MOBILE ================== */
+@media screen and (max-width: 480px) {
+    .day-movement__title, .day-movement__net{
+        font-size: 1.8rem;
+        font-weight: 450;
+    }
+}

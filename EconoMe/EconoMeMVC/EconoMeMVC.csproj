@@ -145,9 +145,15 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Custom_CSS\buttons.css" />
     <Content Include="Content\Custom_CSS\dashboard.css" />
+    <Content Include="Content\Custom_CSS\form.css" />
     <Content Include="Content\Custom_CSS\global.css" />
     <Content Include="Content\Custom_CSS\index.css" />
+    <Content Include="Content\Custom_CSS\login.css" />
+    <Content Include="Content\Custom_CSS\movements.css" />
+    <Content Include="Content\Custom_CSS\profile.css" />
+    <Content Include="Content\Custom_JS\chart.js" />
     <Content Include="Content\Custom_JS\header.js" />
+    <Content Include="Content\Img\logo_definitivo_color.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -183,6 +189,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Math.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

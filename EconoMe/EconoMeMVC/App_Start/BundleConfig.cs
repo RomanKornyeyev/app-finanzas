@@ -22,6 +22,7 @@ namespace EconoMeMVC
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            //ORIGINAL BOOTSTRAP:
             //bundles.Add(new StyleBundle("~/Content/css").Include(
             //          "~/Content/bootstrap.css",
             //          "~/Content/site.css"));
@@ -29,12 +30,15 @@ namespace EconoMeMVC
             bundles.Add(new StyleBundle("~/Content/Custom_CSS/js-global").Include(
                       "~/Content/Custom_JS/header.js"));
 
-            bundles.Add(new StyleBundle("~/Content/Custom_CSS/css").Include(
+            bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-global").Include(
                       "~/Content/Custom_CSS/buttons.css",
                       "~/Content/Custom_CSS/global.css"));
 
             bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-index").Include(
                       "~/Content/Custom_CSS/index.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-dashboard").Include(
+                      "~/Content/Custom_CSS/dashboard.css"));
         }
     }
 }

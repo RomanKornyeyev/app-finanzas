@@ -30,6 +30,13 @@ namespace EconoMeMVC.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            ViewBag.Message = "Your dashboard";
+
+            return View();
+        }
+
         public async Task<ActionResult> Math()
         {
             ViewBag.Message = "Your math page.";
