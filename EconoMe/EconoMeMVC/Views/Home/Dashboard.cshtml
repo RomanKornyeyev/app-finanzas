@@ -2,17 +2,57 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.SpecificStyles = "~/Content/Custom_CSS/css-dashboard";
+
+
+    int? year = ViewBag.Year;
+    int? month = ViewBag.Month;
+    string [] monthName = {
+        ""
+        ,"Enero"
+        ,"Febrero"
+        ,"Marzo"
+        ,"Abril"
+        ,"Mayo"
+        ,"Junio"
+        ,"Julio"
+        ,"Agosto"
+        ,"Septiembre"
+        ,"Octubre"
+        ,"Noviembre"
+        ,"Diciembre"
+    };
 }
 
 <div class="main__content limit-width">
     <nav class="main__nav">
-        <a href="" class="nav__link">Dashboard</a>
-        <span class="nav__delimiter">&gt;</span>
-        <a href="" class="nav__link">2024</a>
+        @Html.ActionLink("Posición global", "Dashboard", "Home", new { area = "" }, new { @class = "nav__link" })
+        @if (year.HasValue)
+        {
+            <span class="nav__delimiter">&gt;</span>
+            @Html.ActionLink("" + year, "Dashboard", "Home", new { year = year }, new { @class = "nav__link" })
+            if (month.HasValue)
+            {
+                <span class="nav__delimiter">&gt;</span>
+                @Html.ActionLink("" + month, "Dashboard", "Home", new { year = year, month = month }, new { @class = "nav__link" })
+            }
+        }
+
     </nav>
 
     <section class="main__dashboard">
-        <h1 class="dashboard__title">Tus movimientos del 2024</h1>
+
+        @if (!year.HasValue && !month.HasValue)
+        {
+            <h1 class="dashboard__title">Tu posición global</h1>
+        }
+        else if (year.HasValue && !month.HasValue)
+        {
+            <h1 class="dashboard__title">Tus movimientos del @year</h1>
+        }
+        else if (year.HasValue && month.HasValue)
+        {
+            <h1 class="dashboard__title">Tus movimientos de @month del @year</h1>
+        }
         <div class="dashboard__movements">
             <div class="movements__box">
                 <h3 class="box__title">Ingresos</h3>
@@ -32,35 +72,103 @@
         </section>
     </section>
 
+    @if (!month.HasValue)
+    {
+        <section class="main__dates">
+            <h2 class="dates__title">Tus movimientos por años</h2>
+            <div class="dates__content">
+                <div class="date__box">
+                    <h3 class="date__title">2023</h3>
+                </div>
+                <div class="date__box">
+                    <h3 class="date__title">2022</h3>
+                </div>
+                <div class="date__box">
+                    <h3 class="date__title">2021</h3>
+                </div>
+                <div class="date__box">
+                    <h3 class="date__title">2020</h3>
+                </div>
+                <div class="date__box">
+                    <h3 class="date__title">2019</h3>
+                </div>
+                <div class="date__box">
+                    <h3 class="date__title">2018</h3>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="main__dates">
+            <h2 class="dates__title">Tus movimientos por días</h2>
+            <!-- DAY -->
+            <section class="dates__day">
+                <h3 class="day__title">Lunes 1</h3>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Sueldo</div>
+                    <div class="day-movement__net"><span class="color-success">+1.267,23€</span></div>
+                    <div class="day-movement__desc">Pago por nómina</div>
+                    <div class="day-movement__category">Nómina</div>
+                </div>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Compra en el súper</div>
+                    <div class="day-movement__net"><span class="color-error">-54,32€</span></div>
+                    <div class="day-movement__desc">Compra semanal de pan, carne, lácteos...</div>
+                    <div class="day-movement__category">Comida</div>
+                </div>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Unas cañas</div>
+                    <div class="day-movement__net"><span class="color-error">-12,56€</span></div>
+                    <div class="day-movement__desc">Cañas con los colegas</div>
+                    <div class="day-movement__category">Ocio</div>
+                </div>
+            </section>
+            <!-- DAY -->
+            <section class="dates__day">
+                <h3 class="day__title">Martes 2</h3>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Compra en amazon</div>
+                    <div class="day-movement__net"><span class="color-error">-25,12€</span></div>
+                    <div class="day-movement__desc">Cargador del móvil y cable</div>
+                    <div class="day-movement__category">Electrodomésticos</div>
+                </div>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Uber Eats</div>
+                    <div class="day-movement__net"><span class="color-error">-5€</span></div>
+                    <div class="day-movement__desc">Delivery de Taco Bell</div>
+                    <div class="day-movement__category">Comida</div>
+                </div>
+                <!-- MOVEMENT -->
+                <div class="day__day-movement">
+                    <div class="day-movement__title">Regalo amigo</div>
+                    <div class="day-movement__net"><span class="color-error">-56,32€</span></div>
+                    <div class="day-movement__desc">Un videojuego por el cumple</div>
+                    <div class="day-movement__category">Regalos</div>
+                </div>
+            </section>
+        </section>
+    }
 
-    <section class="main__dates">
-        <h2 class="dates__title">Tus movimientos por años</h2>
-        <div class="dates__content">
-            <div class="date__box">
-                <h3 class="date__title">2023</h3>
-            </div>
-            <div class="date__box">
-                <h3 class="date__title">2022</h3>
-            </div>
-            <div class="date__box">
-                <h3 class="date__title">2021</h3>
-            </div>
-            <div class="date__box">
-                <h3 class="date__title">2020</h3>
-            </div>
-            <div class="date__box">
-                <h3 class="date__title">2019</h3>
-            </div>
-            <div class="date__box">
-                <h3 class="date__title">2018</h3>
-            </div>
-        </div>
-    </section>
 </div>
+
+
+
 
 @*@section Scripts{
         @Scripts.Render("~/Content/Custom_JS/js-chart")
     }*@
+
+@* ============ LINKS PARA DASHBOARD, AÑO, MES, DÍA ============ *@
+@*<li>@Html.ActionLink("Global Dashboard", "Dashboard", "Home", new { }, new { @class = "nav__link" })</li>
+    <li>@Html.ActionLink("Dashboard 2024", "Dashboard", "Home", new { year = 2024 }, new { @class = "nav__link" })</li>
+    <li>@Html.ActionLink("Dashboard February 2024", "Dashboard", "Home", new { year = 2024, month = 2 }, new { @class = "nav__link" })</li>*@
+
 @section Scripts {
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <script src="~/Content/Custom_JS/chart.js" defer></script>

@@ -30,9 +30,23 @@ namespace EconoMeMVC.Controllers
             return View();
         }
 
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(int? year, int? month)
         {
-            ViewBag.Message = "Your dashboard";
+            if (year.HasValue && month.HasValue)
+            {
+                ViewBag.Message = $"Dashboard for Year: {year}, Month: {month}";
+            }
+            else if (year.HasValue)
+            {
+                ViewBag.Message = $"Dashboard for Year: {year}";
+            }
+            else
+            {
+                ViewBag.Message = "Global Dashboard";
+            }
+
+            ViewBag.Year = year;
+            ViewBag.Month = month;
 
             return View();
         }

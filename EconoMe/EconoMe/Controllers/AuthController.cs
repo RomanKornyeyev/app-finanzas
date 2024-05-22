@@ -21,6 +21,7 @@ namespace EconoMe.Controllers
             _context = new ControlFinanzasEntities();
         }
 
+        // ======================= AUTH =======================
         // POST: api/Auth/Register
         [HttpPost]
         [Route("api/Auth/Register")]
@@ -131,6 +132,7 @@ namespace EconoMe.Controllers
             return Ok(retVal);
         }
 
+        // ======================= TRANSACCIONES =======================
         // Obtener todas las transacciones de un usuario específico (por año)
         [HttpGet]
         [Route("api/Reports/GetUserTransactionsByYear")]
