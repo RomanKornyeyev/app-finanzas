@@ -1,0 +1,51 @@
+﻿@model EconoMeMVC.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.SpecificStyles = "~/Content/Custom_CSS/css-login";
+}
+
+<div class="main__content limit-width">
+    <div class="form-wrapper">
+        <h1 class="title">Login</h1>
+        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form" }))
+        {
+            <div class='input-wrapper'>
+                @Html.TextBoxFor(m => m.Email, new { @class = "input shadow-lightgray", placeholder = " " })
+                @Html.LabelFor(m => m.Email, new { @class = "label label--text" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class='input-wrapper'>
+                @Html.PasswordFor(m => m.Clave, new { @class = "input shadow-lightgray", placeholder = " " })
+                @Html.LabelFor(m => m.Clave, "Password", new { @class = "label label--text" })
+                @Html.ValidationMessageFor(m => m.Clave)
+            </div>
+            <div class='input-wrapper'>
+                <label for='recuerdame' class='label label--checkbox'></label>
+                <div class='input-wrapper input-wrapper--checkbox'>
+                    <label class='label label--checkbox'>
+                        <input type='checkbox' id='Recuérdame' class='checkbox' name='recuerdame[]' value='Recuérdame'>
+                        <span class='visual-check'></span>
+                        Recuérdame
+                    </label>
+                </div>
+            </div>
+            <div class='input-wrapper input-wrapper--submit'>
+                <button type='submit' id='enviar' name='enviar' class='btn btn--primary shadow-lightgray'>LOGIN</button>
+            </div>
+        }
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @Html.Raw(ViewBag.ErrorMessage)
+            </div>
+        }
+
+        <div class="extra-form-info">
+            ¿Aun no tienes cuenta? <a href="" class="link-enphasis link-body">Regístrate</a>
+        </div>
+    </div>
+</div>

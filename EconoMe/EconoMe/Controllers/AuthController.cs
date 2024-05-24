@@ -93,6 +93,29 @@ namespace EconoMe.Controllers
             return Ok(new { Token = usuario.Token });
         }
 
+
+        [HttpGet]
+        [Route("api/Auth/ValidateToken")]
+        public IHttpActionResult ValidateToken()
+        {
+            var headers = Request.Headers;
+            if (!headers.Contains("Authorization"))
+            {
+                return Unauthorized();
+            }
+
+            string token = headers.GetValues("Authorization").FirstOrDefault();
+
+            // Comprobar si el token es válido
+            if (!ValidateToken(token))
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
+        }
+
+
         // Obtener todas las transacciones de un usuario específico
         [HttpGet]
         [Route("api/Reports/GetUserGlobalTransactions")]

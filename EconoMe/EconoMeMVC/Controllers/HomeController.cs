@@ -5,12 +5,18 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using EconoMeMVC.Models;
+using Newtonsoft.Json;
+using System.Text;
 
 
 namespace EconoMeMVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+
+        private readonly string apiUrl = "https://localhost:44386/api/Auth/Login";
+
         public ActionResult Index()
         {
             return View();
@@ -51,6 +57,53 @@ namespace EconoMeMVC.Controllers
             return View();
         }
 
+        // ================== LOGIN Y AUTH ==================
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(model);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(apiUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseString);
+
+                    // Store the token in a cookie
+                    HttpCookie authCookie = new HttpCookie("AuthToken", tokenResponse.Token);
+                    authCookie.HttpOnly = true; // Optional: make it HTTP-only for security
+                    authCookie.Secure = Request.IsSecureConnection; // Only send via HTTPS
+                    authCookie.SameSite = SameSiteMode.Lax; // Prevent CSRF
+                    Response.Cookies.Add(authCookie);
+
+                    return RedirectToAction("Index");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    ModelState.AddModelError("", "Credenciales incorrectas.");
+                    return View(model);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ha ocurrido un error al intentar iniciar sesión.");
+                    return View(model);
+                }
+            }
+        }
+
         public async Task<ActionResult> Math()
         {
             ViewBag.Message = "Your math page.";
@@ -77,5 +130,10 @@ namespace EconoMeMVC.Controllers
 
             return View();
         }
+    }
+
+    public class TokenResponse
+    {
+        public string Token { get; set; }
     }
 }
