@@ -1,5 +1,7 @@
-﻿@{
-    bool isUserLoggedIn = IsUserLoggedIn();
+﻿@using EconoMeMVC.Helpers
+
+@{
+    bool isUserLoggedIn = UserSessionHelper.IsUserLoggedIn();
 }
 
 <!DOCTYPE html>
@@ -31,40 +33,13 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
-    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Math", "Math", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-            </footer>
-        </div>*@
-
     <!-- ========== GLOBAL CONTAINER ========== -->
     <div class="global-container">
         <!-- ========== HEADER ========== -->
         <header class="header">
             <div class="header__content--mobile">
                 <div class="header__logo header__logo--mobile">
-                    <a href="index.html" class="d-block logo-link">
-                        <?xml version="1.0" encoding="utf-8" ?>
-                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <a href="@Url.Action("Index", "Home")" class="d-block logo-link">
                         <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -87,7 +62,7 @@
 
             <div id="header-content" class="header__content limit-width">
                 <div class="header__logo header__logo--pc">
-                    <a href="index.html" class="d-block logo-link logo-link--header">
+                    <a href="@Url.Action("Index", "Home")" class="d-block logo-link logo-link--header">
                         <svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -105,14 +80,25 @@
                 </div>
                 <nav aria-label="hearder-navigation" class="header__nav">
                     <ul class="nav">
-                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "nav__link" })</li>
-                        <li>@Html.ActionLink("Movimientos", "Movements", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                        @if (isUserLoggedIn)
+                        {
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@Html.ActionLink("Movimientos", "Movements", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                        }
                     </ul>
                 </nav>
                 <nav aria-label="hearder-navigation" class="header__login">
                     <ul class="nav">
-                        <li><a class="nav__link" href="">Login</a></li>
-                        <li><a class="nav__link" href="">Regístrate</a></li>
+                        @if (!isUserLoggedIn)
+                        {
+                            <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                        }
+                        else
+                        {
+                            <li>@Html.Raw("USER")</li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                        }
                     </ul>
                 </nav>
             </div>
@@ -149,7 +135,7 @@
 
     @Scripts.Render("~/Content/Custom_JS/js-global")
     @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")*@
+      @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

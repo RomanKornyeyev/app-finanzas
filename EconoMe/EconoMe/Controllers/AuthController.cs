@@ -43,10 +43,12 @@ namespace EconoMe.Controllers
             var nuevoUsuario = new Usuarios
             {
                 NombreUsuario = request.NombreUsuario,
-                Clave = PasswordHasher.HashPassword(request.Clave), // La contraseña ya llega hasheada
+                Clave = PasswordHasher.HashPassword(request.Clave),
                 Nombres = request.Nombres,
                 Apellidos = request.Apellidos,
-                Email = request.Email
+                Email = request.Email,
+                Token = GenerateToken(),
+                TokenGenerated = DateTime.UtcNow
                 // El campo Foto es opcional y se dejará como nulo por ahora
             };
 
@@ -54,7 +56,7 @@ namespace EconoMe.Controllers
             _context.Usuarios.Add(nuevoUsuario);
             _context.SaveChanges();
 
-            return Ok("Usuario registrado exitosamente.");
+            return Ok(new { Token = nuevoUsuario.Token, Message = "Usuario registrado exitosamente." });
         }
 
         // POST: api/Auth/Login
@@ -99,20 +101,17 @@ namespace EconoMe.Controllers
         public IHttpActionResult ValidateToken()
         {
             var headers = Request.Headers;
-            if (!headers.Contains("Authorization"))
+            if (headers.Contains("Authorization"))
             {
-                return Unauthorized();
+                var token = headers.GetValues("Authorization").First();
+                // Aquí deberías validar el token y devolver el resultado
+                if (ValidateToken(token))
+                {
+                    RenewToken(token);
+                    return Ok();
+                }
             }
-
-            string token = headers.GetValues("Authorization").FirstOrDefault();
-
-            // Comprobar si el token es válido
-            if (!ValidateToken(token))
-            {
-                return Unauthorized();
-            }
-
-            return Ok();
+            return Unauthorized();
         }
 
 
@@ -298,7 +297,7 @@ namespace EconoMe.Controllers
         }
 
         // Método para renovar el token de un usuario
-        private void RenewToken(int userId, string token)
+        private void RenewToken(string token)
         {
             // Comprobar si el token es válido
             if (ValidateToken(token))

@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 using EconoMeMVC.Models;
 using Newtonsoft.Json;
 using System.Text;
+using System.Net.Http.Headers;
+using EconoMeMVC.Models;
+using EconoMeMVC.Helpers;
 
 
 namespace EconoMeMVC.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
 
         private readonly string apiUrl = "https://localhost:44386/api/Auth/Login";
@@ -104,6 +107,59 @@ namespace EconoMeMVC.Controllers
             }
         }
 
+        public ActionResult Logout()
+        {
+            // Borrar la cookie de autenticación
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                var cookie = new HttpCookie("AuthToken");
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+
+            // Redirigir al usuario a la página de inicio
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var client = new HttpClient())
+                {
+                    var urlBase = System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"];
+                    client.BaseAddress = new Uri(urlBase);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // Asegúrate de importar el espacio de nombres adecuado para `PostAsJsonAsync`
+                    var response = await client.PostAsJsonAsync("api/Auth/Register", model);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var token = await response.Content.ReadAsStringAsync();
+                        Response.Cookies.Add(new HttpCookie("AuthToken", token));
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = errorResponse;
+                        return View(model);
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+
+        // ================== MATH (TEST) ==================
         public async Task<ActionResult> Math()
         {
             ViewBag.Message = "Your math page.";

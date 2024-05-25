@@ -1,7 +1,10 @@
-﻿@{
+﻿@using EconoMeMVC.Helpers
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.SpecificStyles = "~/Content/Custom_CSS/css-index";
+
+    bool isUserLoggedIn = UserSessionHelper.IsUserLoggedIn();
 }
 
 <!-- ========== HERO ========== -->
@@ -16,8 +19,16 @@
     </h1>
 
     <div class="main__buttons">
-        <a href="" class="btn btn--primary">Regístrate</a>
-        <a href="" class="btn btn--secondary">Login</a>
+        @if (!isUserLoggedIn)
+        {
+            @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "btn btn--primary" })
+            @Html.Raw("&nbsp;")
+            @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn--secondary" })
+        }
+        else
+        {
+            @Html.ActionLink("Ir a mi dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "btn btn--primary" })
+        }
     </div>
 
     <div class="main__bg-decoration main__bg-decoration--right">
@@ -55,12 +66,23 @@
 <!-- ========== JOIN ========== -->
 <section class="main__content">
     <div class="content__join limit-width">
-        <h2>
-            ¿A qué esperas? Únete hoy mismo
-            <!-- <i class="fa-solid fa-hand-holding-dollar"></i> -->
-        </h2>
-        <p>
-            <a href="" class="btn btn--primary btn--lg">Crear una cuenta</a>
-        </p>
+        @if (!isUserLoggedIn)
+        {
+            <h2>
+                ¿A qué esperas? Únete hoy mismo
+            </h2>
+            <p>
+                @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "btn btn--primary btn--lg" })
+            </p>
+        }
+        else
+        {
+            <h2>
+                ¿Un vistazo a tus finanzas?
+            </h2>
+            <p>
+                @Html.ActionLink("Dashboard", "Dashboard", "Home", new { area = "" }, new { @class = "btn btn--primary btn--lg" })
+            </p>
+        }
     </div>
 </section>
