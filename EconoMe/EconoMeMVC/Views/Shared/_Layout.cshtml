@@ -96,7 +96,7 @@
                         }
                         else
                         {
-                            <li>@Html.Raw("USER")</li>
+                            <li><span id="user-name"></span></li>
                             <li>@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "nav__link" })</li>
                         }
                     </ul>
@@ -131,11 +131,38 @@
         </footer>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (@(isUserLoggedIn.ToString().ToLower())) {
+                fetchUserInfo();
+            }
+        });
 
+        function fetchUserInfo() {
+            $.ajax({
+                url: '@Url.Action("GetUserInfo", "UserSessionHelper")',
+                method: 'GET',
+                headers: {
+                    'Authorization': getCookie('AuthToken')
+                },
+                success: function (response) {
+                    if (response) {
+                        $('#user-name').text('Hola, ' + response.NombreUsuario);
+                    }
+                }
+            });
+        }
 
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+    </script>
     @Scripts.Render("~/Content/Custom_JS/js-global")
     @*@Scripts.Render("~/bundles/jquery")
-      @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

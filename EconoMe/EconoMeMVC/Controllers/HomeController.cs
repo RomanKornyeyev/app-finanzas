@@ -126,6 +126,7 @@ namespace EconoMeMVC.Controllers
             return View();
         }
 
+        // POST: Account/Register
         [HttpPost]
         public async Task<ActionResult> Register(RegisterModel model)
         {
@@ -133,24 +134,31 @@ namespace EconoMeMVC.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    var urlBase = System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"];
-                    client.BaseAddress = new Uri(urlBase);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"]);
 
-                    // Asegúrate de importar el espacio de nombres adecuado para `PostAsJsonAsync`
-                    var response = await client.PostAsJsonAsync("api/Auth/Register", model);
+                    var json = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync("/api/Auth/Register", content);
+
                     if (response.IsSuccessStatusCode)
                     {
-                        var token = await response.Content.ReadAsStringAsync();
-                        Response.Cookies.Add(new HttpCookie("AuthToken", token));
+                        var responseString = await response.Content.ReadAsStringAsync();
+                        var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseString);
+
+                        // Store the token in a cookie
+                        HttpCookie authCookie = new HttpCookie("AuthToken", tokenResponse.Token);
+                        authCookie.HttpOnly = true; // Optional: make it HTTP-only for security
+                        authCookie.Secure = Request.IsSecureConnection; // Only send via HTTPS
+                        authCookie.SameSite = SameSiteMode.Lax; // Prevent CSRF
+                        Response.Cookies.Add(authCookie);
+
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         var errorResponse = await response.Content.ReadAsStringAsync();
-                        ViewBag.ErrorMessage = errorResponse;
-                        return View(model);
+                        ModelState.AddModelError("", errorResponse);
                     }
                 }
             }

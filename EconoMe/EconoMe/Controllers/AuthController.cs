@@ -95,6 +95,30 @@ namespace EconoMe.Controllers
             return Ok(new { Token = usuario.Token });
         }
 
+        //obtener info usuario
+        [HttpGet]
+        [Route("api/Auth/GetUserInfo")]
+        public IHttpActionResult GetUserInfo()
+        {
+            string authToken = Request.Headers.Authorization.Parameter;
+
+            var user = _context.Usuarios.FirstOrDefault(u => u.Token == authToken);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var userInfo = new
+            {
+                user.NombreUsuario,
+                user.Email,
+                user.Nombres,
+                user.Apellidos
+            };
+
+            return Ok(userInfo);
+        }
+
 
         [HttpGet]
         [Route("api/Auth/ValidateToken")]

@@ -24,7 +24,9 @@ namespace EconoMeMVC.Models
         [Compare("Clave", ErrorMessage = "Las claves no coinciden")]
         public string ConfirmarClave { get; set; }
 
+        [Required(ErrorMessage = "Los nombres son obligatorios")]
         public string Nombres { get; set; }
+        [Required(ErrorMessage = "Los apellidos son obligatorios")]
         public string Apellidos { get; set; }
     }
 }

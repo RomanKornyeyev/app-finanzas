@@ -4,6 +4,8 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Configuration;
 using static System.Net.WebRequestMethods;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace EconoMeMVC.Helpers
 {
@@ -37,5 +39,37 @@ namespace EconoMeMVC.Helpers
             }
             return false;
         }
+
+        public static async Task<UserInfo> GetUserInfoAsync(HttpRequestBase request)
+        {
+            HttpCookie authCookie = request.Cookies["AuthToken"];
+            if (authCookie == null || string.IsNullOrEmpty(authCookie.Value))
+            {
+                return null;
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ApiBaseUrl);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
+
+                var response = await client.GetAsync("api/Auth/GetUserInfo");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<UserInfo>(responseString);
+            }
+        }
+    }
+
+    public class UserInfo
+    {
+        public string NombreUsuario { get; set; }
+        public string Email { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 
 <div class="main__content limit-width">
     <div class="form-wrapper">
-        <h1 class="title">Login</h1>
+        <h1 class="title">Registro</h1>
         @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form" }))
         {
             <div class='input-wrapper'>
@@ -20,6 +20,16 @@
                 @Html.TextBoxFor(m => m.Email, new { @class = "input shadow-lightgray", placeholder = " " })
                 @Html.LabelFor(m => m.Email, new { @class = "label label--text" })
                 @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class='input-wrapper'>
+                @Html.TextBoxFor(m => m.Nombres, new { @class = "input shadow-lightgray", placeholder = " " })
+                @Html.LabelFor(m => m.Nombres, new { @class = "label label--text" })
+                @Html.ValidationMessageFor(m => m.Nombres)
+            </div>
+            <div class='input-wrapper'>
+                @Html.TextBoxFor(m => m.Apellidos, new { @class = "input shadow-lightgray", placeholder = " " })
+                @Html.LabelFor(m => m.Apellidos, new { @class = "label label--text" })
+                @Html.ValidationMessageFor(m => m.Apellidos)
             </div>
             <div class='input-wrapper'>
                 @Html.PasswordFor(m => m.Clave, new { @class = "input shadow-lightgray", placeholder = " " })
@@ -42,8 +52,8 @@
                 @Html.Raw(ViewBag.ErrorMessage)
             </div>
         }
-    <div class="extra-form-info">
-        ¿Ya tienes cuenta? @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
-    </div>
+        <div class="extra-form-info">
+            ¿Ya tienes cuenta? @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
+        </div>
     </div>
 </div>
