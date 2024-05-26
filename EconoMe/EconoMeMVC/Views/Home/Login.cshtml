@@ -37,6 +37,8 @@
             </div>
         }
 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         @if (ViewBag.ErrorMessage != null)
         {
             <div class="alert alert-danger">
@@ -44,9 +46,9 @@
             </div>
         }
 
-    <div class="extra-form-info">
-        ¿Aun no tienes cuenta? @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
+        <div class="extra-form-info">
+            ¿Aun no tienes cuenta? @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
 
-    </div>
+        </div>
     </div>
 </div>

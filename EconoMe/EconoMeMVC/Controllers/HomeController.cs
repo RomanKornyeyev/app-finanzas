@@ -63,6 +63,12 @@ namespace EconoMeMVC.Controllers
         // ================== LOGIN Y AUTH ==================
         public ActionResult Login()
         {
+            // Verificar si el usuario ya está logueado
+            if (UserSessionHelper.IsUserLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -97,13 +103,14 @@ namespace EconoMeMVC.Controllers
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
                     ModelState.AddModelError("", "Credenciales incorrectas.");
-                    return View(model);
+                    //ViewBag.ErrorMessage = "Credenciales incorrectas. VIEWBAG";
                 }
                 else
                 {
                     ModelState.AddModelError("", "Ha ocurrido un error al intentar iniciar sesión.");
-                    return View(model);
+                    //ViewBag.ErrorMessage = "Ha ocurrido un error al intentar iniciar sesión.";
                 }
+                return View(model);
             }
         }
 
@@ -123,6 +130,11 @@ namespace EconoMeMVC.Controllers
 
         public ActionResult Register()
         {
+            // Verificar si el usuario ya está logueado
+            if (UserSessionHelper.IsUserLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
