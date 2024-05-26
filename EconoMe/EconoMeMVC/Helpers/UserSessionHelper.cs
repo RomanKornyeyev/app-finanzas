@@ -6,6 +6,7 @@ using System.Configuration;
 using static System.Net.WebRequestMethods;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using EconoMeMVC.Controllers;
 
 namespace EconoMeMVC.Helpers
 {
@@ -40,28 +41,28 @@ namespace EconoMeMVC.Helpers
             return false;
         }
 
-        public static async Task<UserInfo> GetUserInfoAsync(HttpRequestBase request)
+        public static UserInfo GetUserInfo()
         {
-            HttpCookie authCookie = request.Cookies["AuthToken"];
-            if (authCookie == null || string.IsNullOrEmpty(authCookie.Value))
+            HttpCookie authCookie = HttpContext.Current.Request.Cookies["AuthToken"];
+            if (authCookie != null && !string.IsNullOrEmpty(authCookie.Value))
             {
-                return null;
-            }
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(ApiBaseUrl);
-                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
-
-                var response = await client.GetAsync("api/Auth/GetUserInfo");
-                if (!response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    return null;
-                }
+                    client.BaseAddress = new Uri(ApiBaseUrl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
 
-                var responseString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<UserInfo>(responseString);
+                    HttpResponseMessage response = client.GetAsync("api/Auth/GetUserInfo").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseString = response.Content.ReadAsStringAsync().Result;
+                        var userInfo = JsonConvert.DeserializeObject<UserInfo>(responseString);
+                        return userInfo;
+                    }
+                }
             }
+            return null;
         }
     }
 

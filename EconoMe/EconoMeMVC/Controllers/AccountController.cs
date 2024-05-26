@@ -11,22 +11,47 @@ using System.Web.Mvc;
 
 namespace EconoMeMVC.Controllers
 {
+    // ********** CONTROLADOR ORIGINALMENTE CREADO PARA RECUPERAR DATOS DE USER CON JS ASÍNCRONO **********
+    // ********** MÁS EFICIENTE, PERO MÁS QUEBRADEROS DE CABEZA **********
+    // ********** ACTUALMENTE EN DESUSO, SE GESTIONA MEDIANTE EL HELPER UserSessionHelper **********
     public class AccountController : Controller
     {
+
+        private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+
+        
         [HttpGet]
         public async Task<ActionResult> GetUserInfo()
         {
-            var userInfo = await UserSessionHelper.GetUserInfoAsync(Request);
 
-            if (userInfo == null)
+            var authCookie = Request.Cookies["AuthToken"];
+            if (authCookie == null)
             {
-                return Json(new { success = false, message = "No se pudo obtener la información del usuario." }, JsonRequestBehavior.AllowGet);
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { success = true, data = userInfo }, JsonRequestBehavior.AllowGet);
-        }
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
+                var response = await client.GetAsync($"{_apiBaseUrl}/api/Auth/GetUserInfo");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Json(null, JsonRequestBehavior.AllowGet);
+                }
 
-        private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+                var responseString = await response.Content.ReadAsStringAsync();
+                var userInfo = JsonConvert.DeserializeObject<UserInfo>(responseString);
+                return Json(userInfo, JsonRequestBehavior.AllowGet);
+            }
+        }        
     }
 
+
+    public class UserInfo
+    {
+        public string NombreUsuario { get; set; }
+        public string Email { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+    }
 }
