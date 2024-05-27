@@ -10,7 +10,7 @@
     <div class="form-wrapper">
         <h1 class="title">Login</h1>
         <!-- necesario poner placerholder con un espacio vacío para un trick css -->
-        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form" }))
+        @using (Html.BeginForm("Login", "Auth", FormMethod.Post, new { @class = "form" }))
         {
             <div class='input-wrapper'>
                 @Html.TextBoxFor(m => m.Email, new { @class = "input shadow-lightgray", placeholder = " " })
@@ -47,8 +47,7 @@
         }
 
         <div class="extra-form-info">
-            ¿Aun no tienes cuenta? @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
-
+            ¿Aun no tienes cuenta? @Html.ActionLink("Regístrate", "Register", "Auth", new { area = "" }, new { @class = "link-enphasis link-body" })
         </div>
     </div>
 </div>

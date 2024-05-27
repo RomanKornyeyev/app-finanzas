@@ -92,13 +92,14 @@
                     <ul class="nav">
                         @if (!isUserLoggedIn)
                         {
-                            <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "nav__link" })</li>
-                            <li>@Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@Html.ActionLink("Login", "Login", "Auth", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@Html.ActionLink("Regístrate", "Register", "Auth", new { area = "" }, new { @class = "nav__link" })</li>
                         }
                         else
                         {
-                            <li>@*JS: <span id="user-name"></span> | HELPER:*@  Hola, @userInfo.NombreUsuario |</li>
-                            <li>@Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "nav__link" })</li>
+                            <li>@*JS: <span id="user-name"></span> | HELPER:*@  Hola, <strong>@userInfo.NombreUsuario</strong></li>
+                            @Html.Raw("|");
+                            <li>@Html.ActionLink("Logout", "Logout", "Auth", new { area = "" }, new { @class = "nav__link" })</li>
                         }
                     </ul>
                 </nav>

@@ -21,9 +21,9 @@
     <div class="main__buttons">
         @if (!isUserLoggedIn)
         {
-            @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "btn btn--primary" })
+            @Html.ActionLink("Regístrate", "Register", "Auth", new { area = "" }, new { @class = "btn btn--primary" })
             @Html.Raw("&nbsp;")
-            @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn--secondary" })
+            @Html.ActionLink("Login", "Login", "Auth", new { area = "" }, new { @class = "btn btn--secondary" })
         }
         else
         {
@@ -72,7 +72,7 @@
                 ¿A qué esperas? Únete hoy mismo
             </h2>
             <p>
-                @Html.ActionLink("Regístrate", "Register", "Home", new { area = "" }, new { @class = "btn btn--primary btn--lg" })
+                @Html.ActionLink("Regístrate", "Register", "Auth", new { area = "" }, new { @class = "btn btn--primary btn--lg" })
             </p>
         }
         else

@@ -9,7 +9,7 @@
 <div class="main__content limit-width">
     <div class="form-wrapper">
         <h1 class="title">Registro</h1>
-        @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form" }))
+        @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form" }))
         {
             <div class='input-wrapper'>
                 @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "input shadow-lightgray", placeholder = " " })
@@ -56,7 +56,7 @@
             </div>
         }
         <div class="extra-form-info">
-            ¿Ya tienes cuenta? @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "link-enphasis link-body" })
+            ¿Ya tienes cuenta? @Html.ActionLink("Login", "Login", "Auth", new { area = "" }, new { @class = "link-enphasis link-body" })
         </div>
     </div>
 </div>

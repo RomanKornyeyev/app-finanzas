@@ -12,7 +12,7 @@ namespace EconoMeMVC.Helpers
 {
     public static class UserSessionHelper
     {
-        private static readonly string ApiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+        private static readonly string API_BASE_URL = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
         public static bool IsUserLoggedIn()
         {
@@ -21,7 +21,7 @@ namespace EconoMeMVC.Helpers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(ApiBaseUrl);
+                    client.BaseAddress = new Uri(API_BASE_URL);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     // CON ESQUEMA (EJ: BEARER), para aplicaciones más complejas
@@ -31,7 +31,7 @@ namespace EconoMeMVC.Helpers
                     // SIN COMPROBACIÓN DE PARÁMETROS DEL HEADER
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
 
-                    HttpResponseMessage response = client.GetAsync("api/Auth/ValidateToken").Result;
+                    HttpResponseMessage response = client.GetAsync("Auth/ValidateToken").Result;
                     if (response.IsSuccessStatusCode)
                     {
                         return true;
@@ -48,12 +48,12 @@ namespace EconoMeMVC.Helpers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(ApiBaseUrl);
+                    client.BaseAddress = new Uri(API_BASE_URL);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authCookie.Value);
 
-                    HttpResponseMessage response = client.GetAsync("api/Auth/GetUserInfo").Result;
+                    HttpResponseMessage response = client.GetAsync("Auth/GetUserInfo").Result;
                     if (response.IsSuccessStatusCode)
                     {
                         var responseString = response.Content.ReadAsStringAsync().Result;
