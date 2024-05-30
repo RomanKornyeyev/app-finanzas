@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.SpecificStyles = "~/Content/Custom_CSS/css-movements";
+}
+
+<div class="main__content limit-width">
+    <nav class="main__nav">
+        <a href="" class="nav__link">Añadir movimientos</a>
+    </nav>
+
+    <div class="form-wrapper">
+        <h1 class="title">Añade un movimiento</h1>
+        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+        <form action='' method='post' class='form'>
+            <div class="form-top-side">
+                <div class='input-wrapper'>
+                    <label for='tipo' class='label-select'>Tipo</label>
+                    <select name="tipo" id="tipo" class='input shadow-lightgray'>
+                        <option value="Ingreso">Ingreso</option>
+                        <option value="Gasto">Gasto</option>
+                    </select>
+                </div>
+                <div class='input-wrapper'>
+                    <label for='categoria' class='label-select'>Categoría</label>
+                    <select name="categoria" id="categoria" class='input shadow-lightgray'>
+                        <option value="1">Nomina</option>
+                        <option value="2">Comida</option>
+                        <option value="3">Alquiler</option>
+                        <option value="4">Ocio</option>
+                        <option value="5">Electrodomésticos</option>
+                    </select>
+                </div>
+                <div class='input-wrapper'>
+                    <input type='text' id='importe' name='importe' placeholder=' ' value='' class='input shadow-lightgray'>
+                    <label for='importe' class='label label--text'>Importe</label>
+                </div>
+                <div class='input-wrapper'>
+                    <input type='text' id='concepto' name='concepto' placeholder=' ' value='' class='input shadow-lightgray'>
+                    <label for='concepto' class='label label--text'>Concepto</label>
+                </div>
+            </div>
+            <div class='input-wrapper'>
+                <textarea id='descripcion' name='descripcion' placeholder=' ' rows='8' cols='50' class='input shadow-lightgray'></textarea>
+                <label for='descripcion' class='label label--text'>Descripción</label>
+            </div>
+
+            <div class='input-wrapper input-wrapper--submit'>
+                <button type='submit' id='enviar' name='enviar' class='btn btn--primary shadow-lightgray'>REGISTRAR MOVIMIENTO</button>
+            </div>
+        </form>
+    </div>
+
+
+    <section class="main__dates">
+        <h2 class="dates__title">Tus últimos movimientos</h2>
+        <!-- DAY -->
+        <section class="dates__day">
+            <h3 class="day__title">Lunes 1</h3>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Sueldo</div>
+                <div class="day-movement__net"><span class="color-success">+1.267,23€</span></div>
+                <div class="day-movement__desc">Pago por nómina</div>
+                <div class="day-movement__category">Nómina</div>
+            </div>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Compra en el súper</div>
+                <div class="day-movement__net"><span class="color-error">-54,32€</span></div>
+                <div class="day-movement__desc">Compra semanal de pan, carne, lácteos...</div>
+                <div class="day-movement__category">Comida</div>
+            </div>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Unas cañas</div>
+                <div class="day-movement__net"><span class="color-error">-12,56€</span></div>
+                <div class="day-movement__desc">Cañas con los colegas</div>
+                <div class="day-movement__category">Ocio</div>
+            </div>
+        </section>
+        <!-- DAY -->
+        <section class="dates__day">
+            <h3 class="day__title">Martes 2</h3>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Compra en amazon</div>
+                <div class="day-movement__net"><span class="color-error">-25,12€</span></div>
+                <div class="day-movement__desc">Cargador del móvil y cable</div>
+                <div class="day-movement__category">Electrodomésticos</div>
+            </div>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Uber Eats</div>
+                <div class="day-movement__net"><span class="color-error">-5€</span></div>
+                <div class="day-movement__desc">Delivery de Taco Bell</div>
+                <div class="day-movement__category">Comida</div>
+            </div>
+            <!-- MOVEMENT -->
+            <div class="day__day-movement">
+                <div class="day-movement__title">Regalo amigo</div>
+                <div class="day-movement__net"><span class="color-error">-56,32€</span></div>
+                <div class="day-movement__desc">Un videojuego por el cumple</div>
+                <div class="day-movement__category">Regalos</div>
+            </div>
+        </section>
+
+    </section>
+</div>

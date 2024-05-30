@@ -156,5 +156,8 @@ namespace EconoMe.Controllers
 
             return Ok(transactionsDto);
         }
+
+        // **************** SUMMARY JSON FOR VIEWS ****************
+
     }
 }

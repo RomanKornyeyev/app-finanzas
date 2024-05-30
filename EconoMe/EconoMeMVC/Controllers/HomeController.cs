@@ -16,6 +16,11 @@ namespace EconoMeMVC.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Movements()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             return View();

@@ -46,6 +46,9 @@ namespace EconoMeMVC
 
             bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-dashboard").Include(
                       "~/Content/Custom_CSS/dashboard.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Custom_CSS/css-movements").Include(
+                      "~/Content/Custom_CSS/movements.css"));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Util;
@@ -10,16 +11,33 @@ namespace EconoMe.Models.DTOs
     {
 
         public int id { get; set; }
-        public System.DateTime Fecha { get; set; }
+
+        [Required]
+        public DateTime Fecha { get; set; }
+
+        [Required]
+        [Range(0.01, Double.MaxValue, ErrorMessage = "El importe debe ser mayor que cero.")]
         public decimal Importe { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El concepto no puede tener más de 100 caracteres.")]
         public string Concepto { get; set; }
+
         public string Descripcion { get; set; }
+
+        [Required]
         public int TipoTransaccionId { get; set; }
+
+        [Required]
         public int UsuarioId { get; set; }
+
         public string TiposDeTransacciones { get; set; }
+
         public List<string> TransaccionesCategorias { get; set; }
 
-        public TransaccionesDTO(Transaciones transacciones) 
+        public TransaccionesDTO() { }
+
+        public TransaccionesDTO(Transaciones transacciones)
         {
             id = transacciones.id;
             Fecha = transacciones.Fecha;
@@ -34,7 +52,6 @@ namespace EconoMe.Models.DTOs
             {
                 TransaccionesCategorias.Add(item.Categorias.Nombre);
             }
-
         }
 
         public Transaciones ToEntity()
@@ -51,9 +68,6 @@ namespace EconoMe.Models.DTOs
             };
 
             return transaccion;
-
-            //var _context = new ControlFinanzasEntities();
-            //_context.Transaciones.Add(retVal);
         }
 
     }
