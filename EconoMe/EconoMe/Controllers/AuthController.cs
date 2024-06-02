@@ -101,6 +101,7 @@ namespace EconoMe.Controllers
 
             return Ok(new
             {
+                user.id,
                 user.NombreUsuario,
                 user.Email,
                 user.Nombres,

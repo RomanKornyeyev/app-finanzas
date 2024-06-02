@@ -11,6 +11,7 @@ namespace EconoMe.Controllers
     {
         protected readonly ControlFinanzasEntities _context;
         protected const int TOKEN_EXPIRATION_DAYS = 7; // Duración del token en días
+        protected readonly string API_BASE_URL = System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"];
 
         public BaseController()
         {
