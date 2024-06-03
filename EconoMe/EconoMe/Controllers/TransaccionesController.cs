@@ -26,6 +26,11 @@ namespace EconoMe.API.Controllers
             //{
             //    return BadRequest(ModelState);
             //}
+            // Validar que los campos necesarios lleguen en el DTO
+            //if (transaccionDto == null || transaccionDto.Importe <= 0 || string.IsNullOrEmpty(transaccionDto.Concepto))
+            //{
+            //    return BadRequest("Datos de la transacción incompletos o inválidos.");
+            //}
 
 
             //LOCALIZAR AL USER

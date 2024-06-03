@@ -1,4 +1,5 @@
-﻿
+﻿@model EconoMe.Models.RegisterTransaccionesModel
+
 @{
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,46 +13,51 @@
 
     <div class="form-wrapper">
         <h1 class="title">Añade un movimiento</h1>
-        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
-        <form action='' method='post' class='form'>
+        @using (Html.BeginForm("RegisterTransaction", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
             <div class="form-top-side">
                 <div class='input-wrapper'>
-                    <label for='tipo' class='label-select'>Tipo</label>
-                    <select name="tipo" id="tipo" class='input shadow-lightgray'>
-                        <option value="Ingreso">Ingreso</option>
-                        <option value="Gasto">Gasto</option>
-                    </select>
+                    <label for='TipoTransaccion' class='label-select'>Tipo</label>
+                    @Html.DropDownListFor(model => model.TipoTransaccionId, new SelectList(new List<SelectListItem>
+                            {
+                        new SelectListItem { Text = "Ingreso", Value = "1" },
+                        new SelectListItem { Text = "Gasto", Value = "2" }
+                    }, "Value", "Text"), "Seleccione Tipo", new { @class = "input shadow-lightgray" })
                 </div>
                 <div class='input-wrapper'>
-                    <label for='categoria' class='label-select'>Categoría</label>
-                    <select name="categoria" id="categoria" class='input shadow-lightgray'>
-                        <option value="1">Nomina</option>
-                        <option value="2">Comida</option>
-                        <option value="3">Alquiler</option>
-                        <option value="4">Ocio</option>
-                        <option value="5">Electrodomésticos</option>
-                    </select>
+                    <label for='CategoriaId' class='label-select'>Categoría</label>
+                    @Html.DropDownListFor(model => model.CategoriaId, new SelectList(new List<SelectListItem>
+                            {
+                        new SelectListItem { Text = "Nomina", Value = "1" },
+                        new SelectListItem { Text = "Comida", Value = "2" },
+                        new SelectListItem { Text = "Alquiler", Value = "3" },
+                        new SelectListItem { Text = "Ocio", Value = "4" },
+                        new SelectListItem { Text = "Electrodomésticos", Value = "5" }
+                    }, "Value", "Text"), "Seleccione Categoría", new { @class = "input shadow-lightgray" })
                 </div>
                 <div class='input-wrapper'>
-                    <input type='text' id='importe' name='importe' placeholder=' ' value='' class='input shadow-lightgray'>
-                    <label for='importe' class='label label--text'>Importe</label>
+                    @Html.TextBoxFor(model => model.Importe, new { @class = "input shadow-lightgray", placeholder = " " })
+                    @Html.LabelFor(model => model.Importe, new { @class = "label label--text" })
+                    @Html.ValidationMessageFor(model => model.Importe, "", new { @class = "text-danger" })
                 </div>
                 <div class='input-wrapper'>
-                    <input type='text' id='concepto' name='concepto' placeholder=' ' value='' class='input shadow-lightgray'>
-                    <label for='concepto' class='label label--text'>Concepto</label>
+                    @Html.TextBoxFor(model => model.Concepto, new { @class = "input shadow-lightgray", placeholder = " " })
+                    @Html.LabelFor(model => model.Concepto, new { @class = "label label--text" })
+                    @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class='input-wrapper'>
-                <textarea id='descripcion' name='descripcion' placeholder=' ' rows='8' cols='50' class='input shadow-lightgray'></textarea>
-                <label for='descripcion' class='label label--text'>Descripción</label>
+                @Html.TextAreaFor(model => model.Descripcion, new { @class = "input shadow-lightgray", placeholder = " ", rows = 8, cols = 50 })
+                @Html.LabelFor(model => model.Descripcion, new { @class = "label label--text" })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
 
             <div class='input-wrapper input-wrapper--submit'>
                 <button type='submit' id='enviar' name='enviar' class='btn btn--primary shadow-lightgray'>REGISTRAR MOVIMIENTO</button>
             </div>
-        </form>
+        }
     </div>
-
 
     <section class="main__dates">
         <h2 class="dates__title">Tus últimos movimientos</h2>

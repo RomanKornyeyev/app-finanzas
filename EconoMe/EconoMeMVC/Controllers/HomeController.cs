@@ -10,16 +10,15 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
 using EconoMeMVC.Helpers;
+using EconoMe.Models;
 
 
 namespace EconoMeMVC.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Movements()
-        {
-            return View();
-        }
+
+        private readonly string API_BASE_URL = System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"];
 
         public ActionResult Index()
         {
@@ -59,6 +58,66 @@ namespace EconoMeMVC.Controllers
             ViewBag.Month = month;
 
             return View();
+        }
+
+
+        // ************ REGISTER MOVEMENTS ************
+        public ActionResult Movements()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterTransaction(RegisterTransaccionesModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Movements", model);
+            }
+
+            try
+            {
+                var token = Request.Cookies["AuthToken"]?.Value;
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    ModelState.AddModelError("", "No se encontró el token de autenticación.");
+                    return View("Movements", model);
+                }
+
+                var transaccionDto = new
+                {
+                    Importe = model.Importe,
+                    Concepto = model.Concepto,
+                    Descripcion = model.Descripcion,
+                    TipoTransaccionId = model.TipoTransaccionId,
+                    TransaccionesCategorias = new List<string> { model.CategoriaId.ToString() }
+                };
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", token);
+
+                    var response = await client.PostAsJsonAsync($"{API_BASE_URL}Transacciones/Register", transaccionDto);
+                    
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ViewBag.Message = "Transacción registrada exitosamente";
+                        return RedirectToAction("Movements");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Error al registrar la transacción: " + response.ReasonPhrase);
+                        return View("Movements", model);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error interno: " + ex.Message);
+                return View("Movements", model);
+            }
         }
     }
 }
